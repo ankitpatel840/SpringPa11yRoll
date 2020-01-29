@@ -11,11 +11,11 @@ public class BranchData
 
     @Id
    private String STATE;
-    @Column
+    @Column()
   private   String STATE_CODE;
     @Column
   private   Long MINIMUM_WAGES;
-    @Column
+    @Column()
   private   Long HRA_PER;
 
     public String getSTATE() {

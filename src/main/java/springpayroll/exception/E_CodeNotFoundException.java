@@ -7,4 +7,7 @@ public class E_CodeNotFoundException extends  RuntimeException {
     {
            super(s,throwable);
     }
+
+    public E_CodeNotFoundException(String e_code) {
+    }
 }

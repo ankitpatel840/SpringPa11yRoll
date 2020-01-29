@@ -1,20 +1,26 @@
 package springpayroll.model;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.*;
 
-@org.springframework.stereotype.Repository
 
+@Repository
 @Entity
 public class Ctc_Data
 {
 
 
-  //  @GeneratedValue(strategy= GenerationType.IDENTITY)
 
-    @Id
+
+    @Id()
+
     private    String e_Code;
     @Column
     private     String e_Name;
+
    @Column
   private   Long h_R_A;
    @Column
@@ -52,7 +58,7 @@ public class Ctc_Data
 @Column
     private Long minimum_Wage;
 
-public String getE_Code() {
+    public String getE_Code() {
         return e_Code;
     }
 
@@ -68,115 +74,115 @@ public String getE_Code() {
         this.e_Name = e_Name;
     }
 
-    public long getH_R_A() {
+    public Long getH_R_A() {
         return h_R_A;
     }
 
-    public void setH_R_A(long h_R_A) {
+    public void setH_R_A(Long h_R_A) {
         this.h_R_A = h_R_A;
     }
 
-    public long getNet_Take__Home() {
+    public Long getNet_Take__Home() {
         return net_Take__Home;
     }
 
-    public void setNet_Take__Home(long net_Take__Home) {
+    public void setNet_Take__Home(Long net_Take__Home) {
         this.net_Take__Home = net_Take__Home;
     }
 
-    public long getCtc() {
+    public Long getCtc() {
         return ctc;
     }
 
-    public void setCtc(long ctc) {
+    public void setCtc(Long ctc) {
         this.ctc = ctc;
     }
 
-    public long getBasic() {
+    public Long getBasic() {
         return basic;
     }
 
-    public void setBasic(long basic) {
+    public void setBasic(Long basic) {
         this.basic = basic;
     }
 
-    public long getBonus() {
+    public Long getBonus() {
         return bonus;
     }
 
-    public void setBonus(long bonus) {
+    public void setBonus(Long bonus) {
         this.bonus = bonus;
     }
 
-    public long getEmployer_Esi() {
+    public Long getEmployer_Esi() {
         return employer_Esi;
     }
 
-    public void setEmployer_Esi(long employer_Esi) {
+    public void setEmployer_Esi(Long employer_Esi) {
         this.employer_Esi = employer_Esi;
     }
 
-    public long getGratuity() {
+    public Long getGratuity() {
         return gratuity;
     }
 
-    public void setGratuity(long gratuity) {
+    public void setGratuity(Long gratuity) {
         this.gratuity = gratuity;
     }
 
-    public long getGross() {
+    public Long getGross() {
         return gross;
     }
 
-    public void setGross(long gross) {
+    public void setGross(Long gross) {
         this.gross = gross;
     }
 
-    public long getEmployee_Pf() {
+    public Long getEmployee_Pf() {
         return employee_Pf;
     }
 
-    public void setEmployee_Pf(long employee_Pf) {
+    public void setEmployee_Pf(Long employee_Pf) {
         this.employee_Pf = employee_Pf;
     }
 
-    public long getEmployee_Esi() {
+    public Long getEmployee_Esi() {
         return employee_Esi;
     }
 
-    public void setEmployee_Esi(long employee_Esi) {
+    public void setEmployee_Esi(Long employee_Esi) {
         this.employee_Esi = employee_Esi;
     }
 
-    public long getEmployer_Pf() {
+    public Long getEmployer_Pf() {
         return employer_Pf;
     }
 
-    public void setEmployer_Pf(long employer_Pf) {
+    public void setEmployer_Pf(Long employer_Pf) {
         this.employer_Pf = employer_Pf;
     }
 
-    public long getGross_Ded() {
+    public Long getGross_Ded() {
         return gross_Ded;
     }
 
-    public void setGross_Ded(long gross_Ded) {
+    public void setGross_Ded(Long gross_Ded) {
         this.gross_Ded = gross_Ded;
     }
 
-    public long getDiff() {
+    public Long getDiff() {
         return diff;
     }
 
-    public void setDiff(long diff) {
+    public void setDiff(Long diff) {
         this.diff = diff;
     }
 
-    public long getPt_Gross() {
+    public Long getPt_Gross() {
         return pt_Gross;
     }
 
-    public void setPt_Gross(long pt_Gross) {
+    public void setPt_Gross(Long pt_Gross) {
         this.pt_Gross = pt_Gross;
     }
 
@@ -188,22 +194,21 @@ public String getE_Code() {
         this.lOC = lOC;
     }
 
-    public long getNet_pay() {
+    public Long getNet_pay() {
         return net_pay;
     }
 
-    public void setNet_pay(long net_pay) {
+    public void setNet_pay(Long net_pay) {
         this.net_pay = net_pay;
     }
 
-    public long getMinimum_Wage() {
+    public Long getMinimum_Wage() {
         return minimum_Wage;
     }
 
-    public void setMinimum_Wage(long minimum_Wage) {
+    public void setMinimum_Wage(Long minimum_Wage) {
         this.minimum_Wage = minimum_Wage;
     }
-
 
     @Override
     public String toString() {
@@ -228,6 +233,14 @@ public String getE_Code() {
                 ", net_pay=" + net_pay +
                 ", minimum_Wage=" + minimum_Wage +
                 '}';
+    }
+
+    public Ctc_Data() {
+    }
+
+    public Ctc_Data(String e_Code, String e_Name) {
+        this.e_Code = e_Code;
+        this.e_Name = e_Name;
     }
 }
 
