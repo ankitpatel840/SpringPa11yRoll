@@ -63,6 +63,7 @@ public class CtcCalculationController
 
 @RequestMapping("FinalCalulation")
 @ResponseBody
+
    public String all_the_calcution(@RequestParam(value = "ctc")  long ctc, @RequestParam(value = "state")  String state, Model model, ModelAndView modelAndView)
    {
        System.out.println("ankit");
