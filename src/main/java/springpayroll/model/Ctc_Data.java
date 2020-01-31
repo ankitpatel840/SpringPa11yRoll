@@ -1,7 +1,5 @@
 package springpayroll.model;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -17,7 +15,7 @@ public class Ctc_Data
 
     @Id()
 
-    private    String e_Code;
+    private    String e_code;
     @Column
     private     String e_Name;
 
@@ -58,12 +56,12 @@ public class Ctc_Data
 @Column
     private Long minimum_Wage;
 
-    public String getE_Code() {
-        return e_Code;
+    public String getE_code() {
+        return e_code;
     }
 
-    public void setE_Code(String e_Code) {
-        this.e_Code = e_Code;
+    public void setE_code(String e_Code) {
+        this.e_code = e_Code;
     }
 
     public String getE_Name() {
@@ -213,7 +211,7 @@ public class Ctc_Data
     @Override
     public String toString() {
         return "CtcData{" +
-                "e_Code='" + e_Code + '\'' +
+                "e_Code='" + e_code + '\'' +
                 ", e_Name='" + e_Name + '\'' +
                 ", h_R_A=" + h_R_A +
                 ", net_Take__Home=" + net_Take__Home +
@@ -238,8 +236,8 @@ public class Ctc_Data
     public Ctc_Data() {
     }
 
-    public Ctc_Data(String e_Code, String e_Name) {
-        this.e_Code = e_Code;
+    public Ctc_Data(String e_code, String e_Name) {
+        this.e_code = e_code;
         this.e_Name = e_Name;
     }
 }

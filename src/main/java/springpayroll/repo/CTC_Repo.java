@@ -6,14 +6,12 @@ import org.springframework.stereotype.Repository;
 import springpayroll.model.Ctc_Data;
 
 
-
-
 @Repository("data")
 public interface CTC_Repo extends JpaRepository<Ctc_Data, String>
 {
 
 
 
-// List<CtcData> findByE_Name(String N_Name);
+ //boolean findByE_Name(String N_Name);
 
 }

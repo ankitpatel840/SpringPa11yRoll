@@ -44,6 +44,8 @@ public class CtcControllerMethode implements CtcControllerImpl
 
         //VARIFY_IN_DATA_BASE_BY_PASSING_DATA_IS_TRUE/FALSE_________________________________________________________________________________
         boolean e_Code_Varify_Data_Base=ctc_repo.existsById(e_code);
+
+        boolean a=ctc_repo.existsById(e_Name);
         ecode=e_code;
         ename=e_Name;
 
@@ -134,7 +136,7 @@ public class CtcControllerMethode implements CtcControllerImpl
         ctcData.setlOC(state);
         ctcData.setMinimum_Wage(get_minimum_Wage_to_database);
         ctcData.setE_Name(ename);
-        ctcData.setE_Code(ecode);
+        ctcData.setE_code(ecode);
         System.out.println(ecode);
         System.out.println(ename);
         ctc_repo.save(ctcData);
@@ -163,7 +165,7 @@ public class CtcControllerMethode implements CtcControllerImpl
     }
 
 
-    public List<Ctc_Data> all_the_calcution_find_New(long ctc, String e_code, String state, String e_Name, ModelAndView modelAndView)
+    public Ctc_Data all_the_calcution_find_New(long ctc, String e_code, String state, String e_Name)
     {
         BranchData get_data_to_breanch_repo =  branch_repo.findById(state).get();
         Long get_minimum_Wage_to_database=get_data_to_breanch_repo.getMINIMUM_WAGES();
@@ -246,11 +248,11 @@ public class CtcControllerMethode implements CtcControllerImpl
         ctcData.setPt_Gross(got_PT_Gross_Calculation_by_pt_gross);
         ctcData.setMinimum_Wage(get_minimum_Wage_to_database);
         ctcData.setE_Name(e_Name);
-        ctcData.setE_Code(e_code);
+        ctcData.setE_code(e_code);
         System.out.println("asdgg");
         ctc_repo.save(ctcData);
-        modelAndView.addObject(ctcData);
-         return ctc_repo.findAll();
+      //  modelAndView.addObject(ctcData);
+         return ctcData ;
 
 
     }
@@ -271,12 +273,10 @@ public class CtcControllerMethode implements CtcControllerImpl
     }
 
 
-    public List<Ctc_Data> getAllCtcData()
+    public List<Ctc_Data> getAllCtData()
     {
         System.out.println("ankit");
-
         return ctc_repo.findAll();
-
     }
 
 
@@ -288,18 +288,22 @@ public class CtcControllerMethode implements CtcControllerImpl
     {
         System.out.println("ankit");
 
+;
 
          return ctc_repo.findById(e_code);
 
     }
 
 
-    public String delete(String e_code)
+    public String deleteOne(String e_code)
     {
+
         System.out.println(e_code);
         Ctc_Data ab=ctc_repo.getOne(e_code);
+        System.out.println("ADS");
         ctc_repo.delete(ab);
-        return "Your Data is delete";
+        System.out.println("df");
+        return "This" ;
     }
 
 
@@ -312,12 +316,18 @@ public class CtcControllerMethode implements CtcControllerImpl
                     return ctc_repo.save(ctc_data1);
                 })
                 .orElseGet(() -> {
-                    ctc_data.setE_Code(e_code);
+                    ctc_data.setE_code(e_code);
                     return ctc_repo.save(ctc_data);
                 })
                );
 
 
+    }
+
+    public  String  deleteAllData()
+    {
+        ctc_repo.deleteAll();
+        return  " All Data  Deleted";
     }
 
 }
