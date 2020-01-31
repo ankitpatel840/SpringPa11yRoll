@@ -49,8 +49,7 @@ class CtcCalculationControllerTest {
  @InjectMocks
     private ObjectMapper objectMapper;
 
-//    @InjectMocks
-//    private HelloResource helloResource;
+
     @MockBean
     ModelAndView modelAndView;
 
