@@ -1,5 +1,8 @@
 package springpayroll.service;
-@org.springframework.stereotype.Repository
+
+import org.springframework.stereotype.Service;
+
+@Service
 class CtcImplementation implements CtcCalculation {
     // Basic_Calculation_Methode_Is_Created________________________________________________________________________________________________
     public Long basie_calculation_methode(Long ctc, Long winimum_Wage) {
@@ -31,7 +34,7 @@ class CtcImplementation implements CtcCalculation {
 
 
     public Long employePfCalculation(long basicGet) {
-        return  (Math.round(basicGet * 12.0 / 100));
+        return (Math.round(basicGet * 12.0 / 100));
     }
 
     //Gratutity_Claculation_Methode_IS_Created__________________________________________________________________________________________
@@ -45,72 +48,65 @@ class CtcImplementation implements CtcCalculation {
 
     }
 
-//Emloyer_ESI_Calculation_IS_Created______________________________________________________________________________________________
+    //Emloyer_ESI_Calculation_IS_Created______________________________________________________________________________________________
     public Long employerEsiCalculation(long gross) {
         return Math.round((gross * 4.75 / 100));
     }
 
 
-
-//Employee_PF_Calculation_IS_Created__________________________________________________________________________________________________
-    public  Long employeePf(long basicGet) {
-        return  Math.round((basicGet * 12.0 / 100));
+    //Employee_PF_Calculation_IS_Created__________________________________________________________________________________________________
+    public Long employeePf(long basicGet) {
+        return Math.round((basicGet * 12.0 / 100));
     }
 
-//Employe_ESI_Calculation_IS_Created_______________________________________________________________________________________________
-    public  Long employeeEsiCalculation(long gross) {
-        return  Math.round((gross * 1.75 / 100));
+    //Employe_ESI_Calculation_IS_Created_______________________________________________________________________________________________
+    public Long employeeEsiCalculation(long gross) {
+        return Math.round((gross * 1.75 / 100));
 
     }
 
-//Gross_AND_Deduction_Calculation_IS_Created_______________________________________________________________________________________-
-    public  Long grossAndDeductionCalculation(long employee_esi, long employee_pf) {
+    //Gross_AND_Deduction_Calculation_IS_Created_______________________________________________________________________________________-
+    public Long grossAndDeductionCalculation(long employee_esi, long employee_pf) {
         return employee_esi + employee_pf;
     }
 
 
     //NET_PAY_Calculation_IS_Created______________________________________________________________________________________________
-    public  Long netPayCalucaltion(long gross, long employee_pf, long employee_esi) {
+    public Long netPayCalucaltion(long gross, long employee_pf, long employee_esi) {
         return gross - employee_pf - employee_esi;
     }
 
-//NET_TAKE_HOME_IS_CREATED__________________________________________________________________________________________________________
-    public  Long netTakeHomeCalculation(long gross, long grossDed) {
+    //NET_TAKE_HOME_IS_CREATED__________________________________________________________________________________________________________
+    public Long netTakeHomeCalculation(long gross, long grossDed) {
         return gross - grossDed;
     }
 
-//PT_Gross_Calculation_IS_Created________________________________________________________________________________________________
-    public  Long ptGrossCalculation(long netpay, long grossDed) {
+    //PT_Gross_Calculation_IS_Created________________________________________________________________________________________________
+    public Long ptGrossCalculation(long netpay, long grossDed) {
         return netpay + grossDed;
     }
 
-//Difference_Calculation_IS Created_______________________________________________________________________________________________
+    //Difference_Calculation_IS Created_______________________________________________________________________________________________
     public Long differneceCalculation(long netTakeHome, long netPay) {
 
         return netTakeHome - netPay;
     }
 
 
-
-    public  Long home_Rent_Allowance(long basic, long bonus, long gross_deducted, long netpay, long hr)
-    {
+    public Long home_Rent_Allowance(long basic, long bonus, long gross_deducted, long netpay, long hr) {
         long hra_inter_if;
         long hra;
         long hra_calc = netpay + gross_deducted - basic - bonus;
         hra_inter_if = Math.max(hra_calc, 0);
         long basic_mul_hra_percentage = basic * hr / 100;
 
-        if (hra_inter_if < basic_mul_hra_percentage)
-        {
+        if (hra_inter_if < basic_mul_hra_percentage) {
             hra = hra_calc;
-        }
-        else
-        {
+        } else {
             hra = basic * hr / 100;
         }
         return hra;
     }
-
 
 
 }

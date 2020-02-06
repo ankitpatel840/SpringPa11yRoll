@@ -5,17 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.servlet.ModelAndView;
 import springpayroll.impl.CtcControllerImpl;
 import springpayroll.model.Ctc_Data;
-import springpayroll.repo.CTC_Repo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,74 +30,55 @@ class CtcCalculationControllerTest {
 
 
 
-
-   @Autowired
     private MockMvc mockMvc;
 
- @MockBean
-    private CTC_Repo ctc_repo;
     @MockBean
     CtcControllerImpl ctcControllerImpl;
 
-
-
     @InjectMocks
- CtcCalculationController ctcCalculationController;
- @InjectMocks
+    CtcCalculationController ctcCalculationController;
+    @InjectMocks
     private ObjectMapper objectMapper;
 
 
-    @MockBean
-    ModelAndView modelAndView;
-
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
-       ctcControllerImpl= org.mockito.Mockito.mock(CtcControllerImpl.class);
+        ctcControllerImpl = org.mockito.Mockito.mock(CtcControllerImpl.class);
         mockMvc = standaloneSetup(ctcCalculationController).build();
     }
-
-    @Test
-    void homePage() throws Exception {
-        MockitoAnnotations.initMocks(this);
-      when(ctcControllerImpl.homePage()).thenReturn("");
-        MockHttpServletResponse response=mockMvc.perform(get("/home")).andReturn().getResponse();
-        assertThat(response.getStatus(),is(HttpStatus.OK.value()));
-
-
-
-
-    }
-
 
 
     @Test
     void all_the_calcution_find_New() throws Exception {
-
         MockitoAnnotations.initMocks(this);
-        Ctc_Data ctcData=new Ctc_Data("as12","AQW");
-        when(ctcControllerImpl.all_the_calcution_find_New(19967L,"as12","BANGALORE","AQW")).thenReturn(ctcData);
-        MockHttpServletResponse response=mockMvc.perform(get("/ctc/as12/AQW/19967/BANGALORE")).andReturn().getResponse();
+
+
+        Ctc_Data ctcData = new Ctc_Data("as12", "AQW");
+        when(ctcControllerImpl.ctcCalculationDataSavingInDataBase(19967L, "as12", "BANGALORE", "AQW")).thenReturn(ctcData);
+        System.out.println("Aasds");
+
+        System.out.println(ctcControllerImpl.ctcCalculationDataSavingInDataBase(19967L, "as12", "BANGALORE", "AQW"));
+        MockHttpServletResponse response = mockMvc.perform(get("/ctc/as12/AQW/19967/BANGALORE")).andReturn().getResponse();
         System.out.println(response.getStatus());
-        assertThat(response.getStatus(),is(HttpStatus.OK.value()));
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
     }
 
     @Test
     void login_methode_Post() throws Exception {
 //
         MockitoAnnotations.initMocks(this);
-        Ctc_Data ctcData=new Ctc_Data("123","Gunjan");
+        Ctc_Data ctcData = new Ctc_Data("123", "Gunjan");
+        System.out.println(objectMapper);
+        String json = objectMapper.writeValueAsString(ctcData);
 
-        String json=objectMapper.writeValueAsString(ctcData);
-        System.out.println(json);
-
-        MockHttpServletResponse response=mockMvc.perform(post("/ctc/").content(json).contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-
+        System.out.println("dafac");
+        System.out.println(mockMvc);
+        MockHttpServletResponse response = mockMvc.perform(post("/ctc").content(json).contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(response);
         System.out.println("asfe");
         System.out.println(response.getStatus());
-        assertThat(response.getStatus(),is(HttpStatus.CREATED.value()));
-
+        assertThat(response.getStatus(), is(HttpStatus.CREATED.value()));
 
 
     }
@@ -108,31 +86,30 @@ class CtcCalculationControllerTest {
     @Test
     void getAllCtcData() throws Exception {
         MockitoAnnotations.initMocks(this);
-        Ctc_Data ctcData=new Ctc_Data("123","Gunjan");
-         Ctc_Data ctcData1=new Ctc_Data("12","Guj");
-        List<Ctc_Data> list=new ArrayList<>();
+        Ctc_Data ctcData = new Ctc_Data("123", "Gunjan");
+        Ctc_Data ctcData1 = new Ctc_Data("12", "Guj");
+        List<Ctc_Data> list = new ArrayList<>();
         list.add(ctcData);
         list.add(ctcData1);
-        when(ctcControllerImpl.getAllCtData()).thenReturn(list);
-        MockHttpServletResponse response=mockMvc.perform(get("/ctc")).andReturn().getResponse();
-        assertThat(response.getStatus(),is(HttpStatus.OK.value()));
-        assertThat(response.getContentAsString(),is(objectMapper.writeValueAsString(ctcControllerImpl.getAllCtData())));
+        when(ctcControllerImpl.getAllUsersCtcData()).thenReturn(list);
+        MockHttpServletResponse response = mockMvc.perform(get("/ctc")).andReturn().getResponse();
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
+        assertThat(response.getContentAsString(), is(objectMapper.writeValueAsString(ctcControllerImpl.getAllUsersCtcData())));
     }
-
 
 
     @Test
     void getCtcData() throws Exception {
         MockitoAnnotations.initMocks(this);
-        Ctc_Data ctcData=new Ctc_Data("123","Gunjan");
+        Ctc_Data ctcData = new Ctc_Data("123", "Gunjan");
 
-        when(ctcControllerImpl.getCtcData("123")).thenReturn(java.util.Optional.of(ctcData));
-        MockHttpServletResponse response=mockMvc.perform(get("/ctc/123")).andReturn().getResponse();
+        when(ctcControllerImpl.getUserCtcData("123")).thenReturn((ctcData));
+        MockHttpServletResponse response = mockMvc.perform(get("/ctc/123")).andReturn().getResponse();
 
 
-        assertThat(response.getStatus(),is(HttpStatus.OK.value()));
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
 
-      //  assertThat(response.getContentAsString(),is(objectMapper.writeValueAsString(ctcControllerImpl.getCtcData("123"))));
+        assertThat(response.getContentAsString(), is(objectMapper.writeValueAsString(ctcControllerImpl.getUserCtcData("123"))));
 
     }
 
@@ -140,42 +117,41 @@ class CtcCalculationControllerTest {
     void delete() throws Exception {
 
         MockitoAnnotations.initMocks(this);
-        lenient().when(ctcControllerImpl.deleteOne("rishabh123")).thenReturn("This");
+        lenient().when(ctcControllerImpl.deleteOneUserCtcData("rishabh123")).thenReturn("This");
         mockMvc.perform(MockMvcRequestBuilders.delete("/ctc/rishabh123"))
-              .andExpect(status().isOk());
+                .andExpect(status().isOk());
 
     }
 
     @Test
     void put_CtcData() throws Exception {
         MockitoAnnotations.initMocks(this);
-        Ctc_Data ctcData1=new Ctc_Data("123","as");
-      Ctc_Data ctcData=new Ctc_Data("123","Ank");
-        when(ctcControllerImpl.put_CtcData("123",ctcData1)).thenReturn(ctcData);
-        MockHttpServletResponse response=mockMvc.perform(MockMvcRequestBuilders.put("/ctc/123").contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        Ctc_Data ctcData1 = new Ctc_Data("123", "as");
+        Ctc_Data ctcData = new Ctc_Data("123", "Ank");
+        when(ctcControllerImpl.updateUserCtcData("123", ctcData1)).thenReturn(ctcData);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/ctc/123").contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
         System.out.println(response.getStatus());
-        System.out.println(objectMapper.writeValueAsString(ctcControllerImpl.put_CtcData("123",ctcData1)));
+        System.out.println(objectMapper.writeValueAsString(ctcControllerImpl.updateUserCtcData("123", ctcData1)));
         System.out.println(response.getContentAsString());
-        assertThat(response.getStatus(),is(HttpStatus.OK.value()));
-     // assertThat(response.getContentAsString(),is(objectMapper.writeValueAsString(ctcControllerImpl.put_CtcData("123",ctcData1))));
-
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
+        //     assertThat(response.getContentAsString(),is(objectMapper.writeValueAsString(ctcControllerImpl.put_CtcData("123",ctcData1))));
 
 
     }
+
     @Test
     void deleteAll() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-          Ctc_Data ctcData=new Ctc_Data();
+        Ctc_Data ctcData = new Ctc_Data();
 
 
-
-        when(ctcControllerImpl.deleteAllData()).thenReturn("Deleted");
+        when(ctcControllerImpl.deleteAllUserCtcData()).thenReturn("Deleted");
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete("/ctc")).andReturn().getResponse();
 
-        verify(ctcControllerImpl).deleteAllData();
-        assertThat(response.getStatus(),is(HttpStatus.OK.value()));
+        verify(ctcControllerImpl).deleteAllUserCtcData();
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
 
 
     }

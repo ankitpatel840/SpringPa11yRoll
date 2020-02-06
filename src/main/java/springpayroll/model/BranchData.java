@@ -1,22 +1,24 @@
 package springpayroll.model;
 
+import org.springframework.stereotype.Service;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-@org.springframework.stereotype.Repository
+
 @Entity
-public class BranchData
-{
+@Service
+public class BranchData {
 
 
     @Id
-   private String STATE;
+    private String STATE;
     @Column()
-  private   String STATE_CODE;
+    private String STATE_CODE;
     @Column
-  private   Long MINIMUM_WAGES;
+    private Long MINIMUM_WAGES;
     @Column()
-  private   Long HRA_PER;
+    private Long HRA_PER;
 
     public String getSTATE() {
         return STATE;

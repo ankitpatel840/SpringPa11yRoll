@@ -1,32 +1,32 @@
 package springpayroll.impl;
 
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import springpayroll.model.Ctc_Data;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CtcControllerImpl
-{
-    public String homePage();
+@Component
+public interface CtcControllerImpl {
+    public ModelAndView homePage();
 
-    public ModelAndView login_methode_cheaking( String e_Name,String e_code, ModelAndView mv);
+    public ModelAndView loginValidationCheaking(String e_Name, String e_code);
 
-    public String all_the_calcution(  long ctc,  String state, Model model, ModelAndView modelAndView);
+    public String all_the_calcution(long ctc, String state, Model model, ModelAndView modelAndView);
 
-    public Ctc_Data all_the_calcution_find_New(long ctc, String e_code, String state, String e_Name);
+    public Ctc_Data ctcCalculationDataSavingInDataBase(long ctc, String e_code, String state, String e_Name);
 
-    public Ctc_Data login_methode_Post(Ctc_Data ctc_data );
+    public Ctc_Data userCredentialCheaking(Ctc_Data ctc_data);
 
-    public List<Ctc_Data> getAllCtData();
+    public List<Ctc_Data> getAllUsersCtcData();
 
-    public Optional<Ctc_Data> getCtcData(String e_code);
+    public Ctc_Data getUserCtcData(String e_code);
 
-    public String deleteOne(String e_code);
+    public String deleteOneUserCtcData(String e_code);
 
-    public Ctc_Data put_CtcData(String e_code, Ctc_Data ctc_data);
+    public Ctc_Data updateUserCtcData(String e_code, Ctc_Data ctc_data);
 
-    public  String  deleteAllData();
+    public String deleteAllUserCtcData();
 
 }

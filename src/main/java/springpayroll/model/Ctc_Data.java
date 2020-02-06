@@ -1,59 +1,61 @@
 package springpayroll.model;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
-@Repository
 @Entity
-public class Ctc_Data
-{
 
-
+@Service
+public class Ctc_Data {
 
 
     @Id()
 
-    private    String e_code;
+    private String e_code;
     @Column
-    private     String e_Name;
+//    @Setter
+//    @Getter
+    private String ename;
 
-   @Column
-  private   Long h_R_A;
-   @Column
- private Long net_Take__Home;
-   @Column
-  private  Long ctc;
-   @Column
+    @Column
+    private Long h_R_A;
+    @Column
+    private Long net_Take__Home;
+    @Column
+    private Long ctc;
+    @Column
     private Long basic;
-@Column
+    @Column
     private Long bonus;
-   @Column
+    @Column
     private Long employer_Esi;
-   @Column
+    @Column
     private Long gratuity;
-   @Column
+    @Column
     private Long gross;
-   @Column
+    @Column
     private Long employee_Pf;
-   @Column
-     private Long employee_Esi;
-   @Column
-   private  Long employer_Pf;
-   @Column
-     private Long gross_Ded;
-   @Column
-    private  Long diff;
-   @Column
-    private  Long pt_Gross;
-   @Column
+    @Column
+    private Long employee_Esi;
+    @Column
+    private Long employer_Pf;
+    @Column
+    private Long gross_Ded;
+    @Column
+    private Long diff;
+    @Column
+    private Long pt_Gross;
+    @Column
 
-    private  String lOC;
-   @Column
-   private Long net_pay;
+    private String lOC;
+    @Column
+    private Long net_pay;
 
-@Column
+    @Column
     private Long minimum_Wage;
 
     public String getE_code() {
@@ -64,12 +66,12 @@ public class Ctc_Data
         this.e_code = e_Code;
     }
 
-    public String getE_Name() {
-        return e_Name;
+    public String getEname() {
+        return ename;
     }
 
-    public void setE_Name(String e_Name) {
-        this.e_Name = e_Name;
+    public void setEname(String e_Name) {
+        this.ename = e_Name;
     }
 
     public Long getH_R_A() {
@@ -212,7 +214,7 @@ public class Ctc_Data
     public String toString() {
         return "CtcData{" +
                 "e_Code='" + e_code + '\'' +
-                ", e_Name='" + e_Name + '\'' +
+                ", e_Name='" + ename + '\'' +
                 ", h_R_A=" + h_R_A +
                 ", net_Take__Home=" + net_Take__Home +
                 ", ctc=" + ctc +
@@ -236,9 +238,13 @@ public class Ctc_Data
     public Ctc_Data() {
     }
 
-    public Ctc_Data(String e_code, String e_Name) {
+    public Ctc_Data(String e_code) {
+
+    }
+
+    public Ctc_Data(String e_code, String ename) {
         this.e_code = e_code;
-        this.e_Name = e_Name;
+        this.ename = ename;
     }
 }
 

@@ -2,22 +2,27 @@ package springpayroll.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@WebMvcTest(value = CtcCalculation.class)
 class ServiceTest {
 
     // Service service;
-
+    @Autowired
+    CtcCalculation service;
 
     @BeforeEach
     void setUp() {
 
+        // service=new CtcImplementation();
     }
 
     @Test
     void basie_calculation_methode() {
-        CtcImplementation service = new CtcImplementation();
+        //   CtcCalculation service = new CtcImplementation();
 
         Long basic = service.basie_calculation_methode(19967L, 12244L);
         assertEquals(12244, basic);
@@ -25,7 +30,8 @@ class ServiceTest {
 
     @Test
     void basie_calculation_methode_Exception() {
-        CtcImplementation service = new CtcImplementation();
+
+//                = new CtcImplementation();
         int ctcc = 12244;
         String ctc = "122dd";
         try {
@@ -48,7 +54,7 @@ class ServiceTest {
 
     @Test
     void basie_calculation_methode_AirthmethicException() throws ArithmeticException {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
 
         try {
 
@@ -65,7 +71,7 @@ class ServiceTest {
 
     @Test
     void basie_calculation_methode_CException() {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
 
         try {
             long a = 19967L;
@@ -88,7 +94,7 @@ class ServiceTest {
 
     @Test
     void bonusCalulation() {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
         Long bonus = service.bonusCalulation(12244);
         assertEquals(1020, bonus);
     }
@@ -96,7 +102,7 @@ class ServiceTest {
     @Test
     void bonusCalulation_Number_Formet_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //  CtcImplementation service = new CtcImplementation();
             String as = "abbd";
             Long b = 12244L;
             if (!as.equals(b)) {
@@ -113,7 +119,7 @@ class ServiceTest {
     @Test
     void bonusCalulation_Airthmetic_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            // CtcImplementation service = new CtcImplementation();
 
             Long b = 12244L;
             if (b != 0) {
@@ -130,7 +136,7 @@ class ServiceTest {
     @Test
     void bonusCalulation_ClassCast_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            // CtcImplementation service = new CtcImplementation();
 
             Long b = 12244L;
 
@@ -147,7 +153,7 @@ class ServiceTest {
 
     @Test
     void employePfCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
         Long bonus = service.employePfCalculation(12244);
         assertEquals(1469, bonus);
     }
@@ -156,7 +162,7 @@ class ServiceTest {
     @Test
     void employePfCalculation_Number_Formet_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            // CtcImplementation service = new CtcImplementation();
             String as = "abbd";
             Long b = 12244L;
             if (!as.equals(b)) {
@@ -172,7 +178,7 @@ class ServiceTest {
     @Test
     void employePfCalculation_Airthmetic_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //  CtcImplementation service = new CtcImplementation();
 
             Long b = 12244L;
             if (b != 0) {
@@ -189,7 +195,7 @@ class ServiceTest {
     @Test
     void employePfCalculation_Class_Cast_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            // CtcImplementation service = new CtcImplementation();
 
             Long b = 12244L;
 
@@ -213,7 +219,7 @@ class ServiceTest {
     @Test
     void gratutityCalculation_Number_Formet_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //  CtcImplementation service = new CtcImplementation();
             String as = "abbd";
             Long b = 12244L;
             if (!as.equals(b)) {
@@ -229,7 +235,7 @@ class ServiceTest {
     @Test
     void gratutityCalculation_Airthmethic_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            // CtcImplementation service = new CtcImplementation();
 
             Long b = 12244L;
             if (b != 0) {
@@ -262,7 +268,7 @@ class ServiceTest {
 
     @Test
     void grossCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
         Long gross = service.grossCalculation(19967, 1469, 589);
         assertEquals(17097, gross);
     }
@@ -288,7 +294,7 @@ class ServiceTest {
     @Test
     void grossCalculation_Airthmethic_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //     CtcImplementation service = new CtcImplementation();
             Long gross = service.grossCalculation(19967, 1469, 589);
             assertEquals(17097, gross);
         } catch (ArithmeticException e) {
@@ -299,7 +305,7 @@ class ServiceTest {
     @Test
     void grossCalculation_Class_Cast_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //    CtcImplementation service = new CtcImplementation();
             Long a = 19967L;
             if (a == 19967) {
                 throw new ClassCastException(" Number Should Be Long");
@@ -314,7 +320,7 @@ class ServiceTest {
 
     @Test
     void employerEsiCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
         Long em_ESi = service.employerEsiCalculation(17097);
         assertEquals(812, em_ESi);
     }
@@ -328,7 +334,7 @@ class ServiceTest {
             if (a.equals(b)) {
                 throw new NumberFormatException("Invalied Long Number Enter ");
             }
-            CtcImplementation service = new CtcImplementation();
+            // CtcImplementation service = new CtcImplementation();
             Long em_ESi = service.employerEsiCalculation(17097);
             assertEquals(812, em_ESi);
         } catch (NumberFormatException e) {
@@ -339,7 +345,7 @@ class ServiceTest {
     @Test
     void employerEsiCalculation_Airthmethic_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //   CtcImplementation service = new CtcImplementation();
             Long em_ESi = service.employerEsiCalculation(17097 / 0);
             assertEquals(812, em_ESi);
 
@@ -353,7 +359,7 @@ class ServiceTest {
         try {
 
 
-            CtcImplementation service = new CtcImplementation();
+            //   CtcImplementation service = new CtcImplementation();
             Long a = 812L;
             if (a == 812) {
                 throw new ClassCastException(" Number Should Be Long");
@@ -368,7 +374,7 @@ class ServiceTest {
 
     @Test
     void employeePf() {
-        CtcImplementation service = new CtcImplementation();
+        //     CtcImplementation service = new CtcImplementation();
         Long bonus = service.employePfCalculation(12244);
         assertEquals(1469, bonus);
     }
@@ -376,7 +382,7 @@ class ServiceTest {
     @Test
     void employeePf_Number_Formet_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //   CtcImplementation service = new CtcImplementation();
             String as = "abbd";
             Long b = 12244L;
             if (!as.equals(b)) {
@@ -409,7 +415,7 @@ class ServiceTest {
     @Test
     void employeePf_Class_Cast_ExCeption() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //   CtcImplementation service = new CtcImplementation();
 
             Long b = 12244L;
 
@@ -426,7 +432,7 @@ class ServiceTest {
 
     @Test
     void employeeEsiCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        //  CtcImplementation service = new CtcImplementation();
         Long em_ESi = service.employeeEsiCalculation(17097);
         assertEquals(299, em_ESi);
     }
@@ -439,7 +445,7 @@ class ServiceTest {
             if (!a.equals(b)) {
                 throw new NumberFormatException("Invalied Long Number Enter ");
             }
-            CtcImplementation service = new CtcImplementation();
+            //   CtcImplementation service = new CtcImplementation();
             Long em_ESi = service.employeeEsiCalculation(17097);
             assertEquals(299, em_ESi);
         } catch (NumberFormatException e) {
@@ -462,7 +468,7 @@ class ServiceTest {
 
     @Test
     void employeeEsiCalculation_Class_Cast_Exception() {
-        CtcImplementation service = new CtcImplementation();
+        // CtcImplementation service = new CtcImplementation();
         Long a = 812L;
         if (a != 812) {
             throw new ClassCastException(" Number Should Be Long");
@@ -474,7 +480,7 @@ class ServiceTest {
 
     @Test
     void grossAndDeductionCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        //  CtcImplementation service = new CtcImplementation();
         Long grossDEd = service.grossAndDeductionCalculation(299, 1469);
         assertEquals(1768, grossDEd);
     }
@@ -488,7 +494,7 @@ class ServiceTest {
                 throw new NumberFormatException("Invalied Long Number Enter ");
             }
 
-            CtcImplementation service = new CtcImplementation();
+            //       CtcImplementation service = new CtcImplementation();
             Long grossDEd = service.grossAndDeductionCalculation(299, 1469);
             assertEquals(1768, grossDEd);
         } catch (NumberFormatException e) {
@@ -513,7 +519,7 @@ class ServiceTest {
             if (a == 299) {
                 throw new ClassCastException(" Number Should Be Long");
             }
-            CtcImplementation service = new CtcImplementation();
+            //     CtcImplementation service = new CtcImplementation();
 
             Long grossDEd = service.grossAndDeductionCalculation(299 / 0, 1469);
 
@@ -526,7 +532,7 @@ class ServiceTest {
 
     @Test
     void netPayCalucaltion() {
-        CtcImplementation service = new CtcImplementation();
+        //  CtcImplementation service = new CtcImplementation();
 
         Long netTHome = service.netPayCalucaltion(17097, 1469, 812);
 
@@ -538,7 +544,7 @@ class ServiceTest {
     @Test
     void netPayCalucaltion_AirthmethicException() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //     CtcImplementation service = new CtcImplementation();
             Long netPay = service.netPayCalucaltion(17097 / 0, 1469, 812);
             assertEquals(14819, netPay);
         } catch (ArithmeticException e) {
@@ -549,7 +555,7 @@ class ServiceTest {
 
     @Test
     void netTakeHomeCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        //   CtcImplementation service = new CtcImplementation();
         service.netTakeHomeCalculation(17097, 1768);
     }
 
@@ -573,7 +579,7 @@ class ServiceTest {
     @Test
     void ptGrossCalculation_AithmethicException() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //    CtcImplementation service = new CtcImplementation();
             Long ptGross = service.ptGrossCalculation(14819 / 0, 1768);
             assertEquals(16587, ptGross);
         } catch (ArithmeticException e) {
@@ -584,7 +590,7 @@ class ServiceTest {
 
     @Test
     void differneceCalculation() {
-        CtcImplementation service = new CtcImplementation();
+        //  CtcImplementation service = new CtcImplementation();
         Long diff = service.differneceCalculation(16587, 16587);
         assertEquals(0, diff);
 
@@ -593,7 +599,7 @@ class ServiceTest {
     @Test
     void differneceCalculation_Aithmethic_Exception() {
         try {
-            CtcImplementation service = new CtcImplementation();
+            //        CtcImplementation service = new CtcImplementation();
             Long diff = service.differneceCalculation(16587 / 0, 16587);
             assertEquals(0, diff);
         } catch (ArithmeticException e) {
@@ -606,7 +612,7 @@ class ServiceTest {
 
     @Test
     void home_Rent_Allowance() {
-        CtcImplementation service = new CtcImplementation();
+        //   CtcImplementation service = new CtcImplementation();
         Long hra = service.home_Rent_Allowance(19967, 1020, 1768, 14819, 50);
 
         assertEquals(-4400, hra);
@@ -617,7 +623,7 @@ class ServiceTest {
     void home_Rent_Allowance_AithmethicException() {
         try {
 
-            CtcImplementation service = new CtcImplementation();
+            //    CtcImplementation service = new CtcImplementation();
             Long hra = service.home_Rent_Allowance(19967 / 0, 1020, 1768, 14819, 50);
 
             assertEquals(-4400, hra);

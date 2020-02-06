@@ -1,5 +1,8 @@
 package springpayroll.service;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public interface CtcCalculation
 {
     public Long basie_calculation_methode(Long ctc, Long winimum_Wage);

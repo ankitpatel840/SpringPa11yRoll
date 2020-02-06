@@ -1,10 +1,11 @@
 package springpayroll.impl;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.stereotype.Service;
 import springpayroll.model.BranchData;
 import springpayroll.model.Ctc_Data;
 import springpayroll.repo.CTC_Repo;
@@ -13,20 +14,19 @@ import springpayroll.service.CtcCalculation;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+@Service
 class CtcControllerMethodeTest {
 
 
-    @InjectMocks
+   @MockBean
     CTC_Repo ctc_repo;
-  @InjectMocks
-    private branch_Repo branch_repo;
+   @MockBean
+    branch_Repo branch_repo;
 
     @MockBean
     CtcCalculation ctcCalculation;
@@ -35,7 +35,7 @@ class CtcControllerMethodeTest {
     BranchData branchData;
       @MockBean
     Ctc_Data ctcData;
-      @InjectMocks
+    @MockBean
       CtcControllerImpl ctcControllerImpl;
 
 
@@ -44,11 +44,13 @@ class CtcControllerMethodeTest {
     @BeforeEach
     public void setUp()
     {
-       // MockitoAnnotations.initMocks(this);
+       MockitoAnnotations.initMocks(this);
 
         ctc_repo= org.mockito.Mockito.mock(CTC_Repo.class);
         branch_repo= org.mockito.Mockito.mock(branch_Repo.class);
+        ctcData=org.mockito.Mockito.mock(Ctc_Data.class);
         ctcControllerImpl=org.mockito.Mockito.mock(CtcControllerImpl.class);
+
 
     }
 
@@ -89,10 +91,10 @@ class CtcControllerMethodeTest {
         Ctc_Data ctc_Data=new Ctc_Data("Ank1","Ank");
         List<Ctc_Data> list= Arrays.asList(ctcData,ctc_Data);
         when(ctc_repo.findAll()).thenReturn(list);
-        when(ctcControllerImpl.getAllCtData()).thenReturn(list);
+        when(ctcControllerImpl.getAllUsersCtcData()).thenReturn(list);
         System.out.println(ctc_repo.findAll());
-        System.out.println(ctcControllerImpl.getAllCtData());
-        List<Ctc_Data>getList=ctcControllerImpl.getAllCtData();
+        System.out.println(ctcControllerImpl.getAllUsersCtcData());
+        List<Ctc_Data>getList=ctcControllerImpl.getAllUsersCtcData();
         verify(ctc_repo).findAll();
         assertThat(getList,is(list));
     }
@@ -100,14 +102,19 @@ class CtcControllerMethodeTest {
     @Test
     void getCtcData()
     {
-        MockitoAnnotations.initMocks(this);
+       // MockitoAnnotations.initMocks(this);
         String id="Ank12";
        Ctc_Data ctcData=new Ctc_Data("Ank12","Ank");
-        when(ctc_repo.findById(id)).thenReturn(java.util.Optional.of(ctcData));
-        when(ctcControllerImpl.getCtcData(id)).thenReturn(java.util.Optional.of(ctcData));
-       Optional<Ctc_Data> ctcController1=ctcControllerImpl.getCtcData(id);
+        when(ctc_repo.getOne(id)).thenReturn(ctcData);
+        System.out.println(ctc_repo.getOne(id));
 
-        assertThat(ctcController1,is(ctc_repo.findById(id)));
+        Ctc_Data ctcController1=ctcControllerImpl.getUserCtcData(id);
+        System.out.println(ctcController1);
+
+
+        MatcherAssert.assertThat(ctcController1,is(ctc_repo.getOne(id)));
+
+
 
     }
 
@@ -127,6 +134,10 @@ class CtcControllerMethodeTest {
 //        ctc_repo.delete(ab);
 //        System.out.println("df");
         Ctc_Data ctcData=new Ctc_Data("Ak11","Ank");
+
+         when(ctc_repo.getOne("Ak11")).thenReturn(ctcData);
+
+
 
     }
 
