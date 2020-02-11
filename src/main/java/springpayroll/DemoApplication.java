@@ -4,12 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-
-//@EnableJpaRepositories("springpayroll.repo.CTC_Repo")
-//@EntityScan("springpayroll.model.CtcData")
-
-
-public class DemoApplication {
+public class DemoApplication  {
 
     public static void main(String[] args) {
         System.out.println("ankit");

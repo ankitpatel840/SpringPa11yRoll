@@ -1,32 +1,32 @@
 package springpayroll.impl;
 
-import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
-import springpayroll.model.Ctc_Data;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
+import springpayroll.exception.ECodeNotFoundException;
+import springpayroll.exception.UserAllreadyExistException;
+import springpayroll.exception.InvalidStateCodeCException;
+import springpayroll.model.CtcData;
 
 import java.util.List;
 
-@Component
+@Service
+@Configuration
 public interface CtcControllerImpl {
-    public ModelAndView homePage();
 
-    public ModelAndView loginValidationCheaking(String e_Name, String e_code);
 
-    public String all_the_calcution(long ctc, String state, Model model, ModelAndView modelAndView);
 
-    public Ctc_Data ctcCalculationDataSavingInDataBase(long ctc, String e_code, String state, String e_Name);
+    CtcData ctcCalculationDataSavingInDataBase(Long ctc, String e_code, String state, String e_Name) throws InvalidStateCodeCException;
 
-    public Ctc_Data userCredentialCheaking(Ctc_Data ctc_data);
+    CtcData newUserCrete(String ecode, String ename) throws UserAllreadyExistException, ECodeNotFoundException;
 
-    public List<Ctc_Data> getAllUsersCtcData();
+    List<CtcData> getAllUsersCtcData();
 
-    public Ctc_Data getUserCtcData(String e_code);
+    CtcData getUserCtcData(String e_code) throws ECodeNotFoundException;
 
-    public String deleteOneUserCtcData(String e_code);
+    String deleteOneUserCtcData(String e_code) throws ECodeNotFoundException;
 
-    public Ctc_Data updateUserCtcData(String e_code, Ctc_Data ctc_data);
+    CtcData updateUserCtcData(String e_code, CtcData ctc_data) throws ECodeNotFoundException;
 
-    public String deleteAllUserCtcData();
+    String deleteAllUserCtcData();
 
 }

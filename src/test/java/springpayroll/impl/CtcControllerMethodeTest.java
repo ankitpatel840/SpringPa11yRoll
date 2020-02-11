@@ -1,155 +1,142 @@
 package springpayroll.impl;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.stereotype.Service;
+import springpayroll.exception.ECodeNotFoundException;
+import springpayroll.exception.UserAllreadyExistException;
 import springpayroll.model.BranchData;
-import springpayroll.model.Ctc_Data;
-import springpayroll.repo.CTC_Repo;
-import springpayroll.repo.branch_Repo;
+import springpayroll.model.CtcData;
+import springpayroll.repo.BranchRepo;
+import springpayroll.repo.CtcRepo;
 import springpayroll.service.CtcCalculation;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-@Service
+
+@WebMvcTest(value = CtcControllerMethode.class)
 class CtcControllerMethodeTest {
+    @Autowired
+    CtcControllerMethode controllerMethode;
 
-
-   @MockBean
-    CTC_Repo ctc_repo;
-   @MockBean
-    branch_Repo branch_repo;
-
+    @MockBean
+    CtcRepo ctcRepo;
+    @MockBean
+    BranchRepo BranchRepo;
     @MockBean
     CtcCalculation ctcCalculation;
-
-   @MockBean
-    BranchData branchData;
-      @MockBean
-    Ctc_Data ctcData;
     @MockBean
-      CtcControllerImpl ctcControllerImpl;
-
-
+    BranchData branchData;
+    @MockBean
+    CtcData CTCData;
 
 
     @BeforeEach
-    public void setUp()
-    {
-       MockitoAnnotations.initMocks(this);
+    public void setUp() {
+        //MockitoAnnotations.initMocks(this);
 
-        ctc_repo= org.mockito.Mockito.mock(CTC_Repo.class);
-        branch_repo= org.mockito.Mockito.mock(branch_Repo.class);
-        ctcData=org.mockito.Mockito.mock(Ctc_Data.class);
-        ctcControllerImpl=org.mockito.Mockito.mock(CtcControllerImpl.class);
+        ctcRepo = org.mockito.Mockito.mock(CtcRepo.class);
+        BranchRepo = org.mockito.Mockito.mock(BranchRepo.class);
 
+        ctcCalculation = org.mockito.Mockito.mock(CtcCalculation.class);
+        CTCData = org.mockito.Mockito.mock(CtcData.class);
 
     }
 
 
-
-
-
-
-
-
     @Test
-    void login_methode_cheaking()
-    {
-//        Ctc_Data ctcData=new Ctc_Data("123","Ank");
-//        when
+    void ctcCalculationDataSavingInDataBase() {
     }
 
     @Test
-    void all_the_calcution() {
-    }
-
-    @Test
-    void all_the_calcution_find_New() {
-    }
-
-    @Test
-    void login_methode_Post()
-    {
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @Test
-    void getAllCtData()
-    {
-
-        MockitoAnnotations.initMocks(this);
-
-        Ctc_Data ctc_Data=new Ctc_Data("Ank1","Ank");
-        List<Ctc_Data> list= Arrays.asList(ctcData,ctc_Data);
-        when(ctc_repo.findAll()).thenReturn(list);
-        when(ctcControllerImpl.getAllUsersCtcData()).thenReturn(list);
-        System.out.println(ctc_repo.findAll());
-        System.out.println(ctcControllerImpl.getAllUsersCtcData());
-        List<Ctc_Data>getList=ctcControllerImpl.getAllUsersCtcData();
-        verify(ctc_repo).findAll();
-        assertThat(getList,is(list));
-    }
-
-    @Test
-    void getCtcData()
-    {
+    void newUserCrete() throws ECodeNotFoundException, UserAllreadyExistException {
        // MockitoAnnotations.initMocks(this);
-        String id="Ank12";
-       Ctc_Data ctcData=new Ctc_Data("Ank12","Ank");
-        when(ctc_repo.getOne(id)).thenReturn(ctcData);
-        System.out.println(ctc_repo.getOne(id));
+        CtcData ctcData = new CtcData("Ankit", "123");
+        when(ctcRepo.save(ctcData)).thenReturn(ctcData);
+        System.out.println(ctcRepo.save(ctcData));
+        System.out.println(controllerMethode);
 
-        Ctc_Data ctcController1=ctcControllerImpl.getUserCtcData(id);
-        System.out.println(ctcController1);
+        CtcData ctcData1 = controllerMethode.newUserCrete("Ankit", "123");
+        System.out.println(ctcData1);
+        assertEquals(ctcData, ctcData1);
 
 
-        MatcherAssert.assertThat(ctcController1,is(ctc_repo.getOne(id)));
+    }
+
+    @Test
+    void getAllUsersCtcData() {
+       // MockitoAnnotations.initMocks(this);
+        CtcData ctcData = new CtcData("123", "Gunjan");
+        CtcData ctcData1 = new CtcData("12", "Guj");
+             List<CtcData> ctcList=new ArrayList<CtcData>();
+                ctcList.add(ctcData);
+                ctcList.add(ctcData1);
+        System.out.println(ctcData1);
+        when(ctcRepo.findAll()).thenReturn(ctcList);
+        System.out.println(ctcRepo.findAll());
+        List<CtcData> as = controllerMethode.getAllUsersCtcData();
+        System.out.println(as);
+        assertEquals(ctcList, as);
+
+
+    }
+
+    @Test
+    void getUserCtcData() throws ECodeNotFoundException {
+        MockitoAnnotations.initMocks(this);
+        String e = "123";
+        CtcData ctcData = new CtcData();
+        ctcData.setE_code(e);
+        ctcData.setEname("Ank");
+
+        when(ctcRepo.getOne(e)).thenReturn(ctcData);
+        System.out.println(ctcRepo.getOne(e));
+        System.out.println(controllerMethode);
+
+        CtcData ctcData1 = controllerMethode.getUserCtcData(e);
+        System.out.println(ctcData1);
+        assertEquals(ctcData, ctcData1);
+    }
+
+    @Test
+    void deleteOneUserCtcData() throws ECodeNotFoundException {
+        CtcData ctcData = new CtcData("123", "Ank");
+        CtcData  ctcData1=ctcRepo.getOne("123");
+           ctcRepo.delete(ctcData1);
+
+           String s=controllerMethode.deleteOneUserCtcData("123");
+          assertEquals("Your Ctc Data Deleted",s);
+
+    }
+
+    @Test
+    void updateUserCtcData() throws ECodeNotFoundException {
+        // MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
+        CtcData CTCData1 = new CtcData("123", "as");
+        CtcData CTCData = new CtcData("123", "Ank");
+        when(ctcRepo.existsById("123")).thenReturn(true);
+        boolean as=ctcRepo.existsById("123");
+        assertTrue(as);
+
+        when(ctcRepo.save( CTCData1)).thenReturn(CTCData);
+
+        CtcData ctcData=controllerMethode.updateUserCtcData("123",CTCData1);
+
+        assertEquals(CTCData,ctcData);
 
 
 
     }
 
     @Test
-    void deleteOne()
-    {
-//        when(queueReository.findByUserId("tarun")).thenReturn(defaultQueue);
-//
-//        DefaultQueue deletedQueue = queueServices.DeleteUserQueue("tarun");
-//
-//        verify(queueServices).DeleteUserQueue("tarun");
-//        assertThat(deletedQueue,is(defaultQueue));
-//
-//        System.out.println(e_code);
-//        Ctc_Data ab=ctc_repo.getOne(e_code);
-//        System.out.println("ADS");
-//        ctc_repo.delete(ab);
-//        System.out.println("df");
-        Ctc_Data ctcData=new Ctc_Data("Ak11","Ank");
-
-         when(ctc_repo.getOne("Ak11")).thenReturn(ctcData);
-
-
-
-    }
-
-    @Test
-    void put_CtcData()
-    {
-
-    }
-
-    @Test
-    void deleteAllData()
-    {
-
+    void deleteAllUserCtcData() {
     }
 }
