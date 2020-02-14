@@ -13,7 +13,6 @@ import javax.persistence.Id;
 
 
 @Entity
-
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
@@ -65,10 +64,6 @@ public class CtcData {
 
     @Column
     private Long minimum_Wage;
-
-
-
-
 
 
     public CtcData(String e_code) {

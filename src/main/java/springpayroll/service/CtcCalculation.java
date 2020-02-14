@@ -3,10 +3,9 @@ package springpayroll.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface CtcCalculation
-{
-    Long basie_calculation_methode(Long ctc, Long winimum_Wage);
+public interface CtcCalculation {
 
+    Long basie_calculation_methode(Long ctc, Long winimum_Wage);
 
     Long bonusCalulation(long BasicGet);
 

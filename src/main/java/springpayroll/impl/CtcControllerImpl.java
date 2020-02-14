@@ -14,8 +14,7 @@ import java.util.List;
 public interface CtcControllerImpl {
 
 
-
-    CtcData ctcCalculationDataSavingInDataBase(Long ctc, String e_code, String state, String e_Name) throws InvalidStateCodeCException;
+    CtcData ctcCalculationDataSavingInDataBase(Long ctc, String e_code, String state, String e_Name) throws InvalidStateCodeCException, ECodeNotFoundException;
 
     CtcData newUserCrete(String ecode, String ename) throws UserAllreadyExistException, ECodeNotFoundException;
 

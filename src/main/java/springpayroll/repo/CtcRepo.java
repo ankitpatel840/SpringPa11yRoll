@@ -13,4 +13,8 @@ public interface CtcRepo extends JpaRepository<CtcData, String>
  boolean existsByEname(String ename);
 
 
+// @Query("select * from ctcdata where loc=? and  ")
+// boolean existByLoc(String loc);
+
+
 }

@@ -1,10 +1,11 @@
 package springpayroll.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 class CtcImplementation implements CtcCalculation {
     // Basic_Calculation_Methode_Is_Created________________________________________________________________________________________________
+
     public Long basie_calculation_methode(Long ctc, Long winimum_Wage) {
         long basic;
         long ctcCheck = (ctc * 30 / 100);
