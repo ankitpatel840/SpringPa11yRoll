@@ -17,13 +17,13 @@ public class RabbitMQConfig
 {
 
 
-    @Value("${javainuse.rabbitmq.queue}")
+    @Value("${springpayroll.rabbitmq.queue}")
     String queueName;
 
-    @Value("${javainuse.rabbitmq.exchange}")
+    @Value("${springpayroll.rabbitmq.exchange}")
     String exchange;
 
-    @Value("${javainuse.rabbitmq.routingkey}")
+    @Value("${springpayroll.rabbitmq.routingkey}")
     private String routingkey;
 
     @Bean

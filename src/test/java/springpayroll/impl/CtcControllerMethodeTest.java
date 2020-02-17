@@ -30,7 +30,6 @@ class CtcControllerMethodeTest {
     CtcControllerMethode controllerMethode;
 
 
-
     @MockBean
     CtcRepo ctcRepo;
     @MockBean
@@ -41,8 +40,8 @@ class CtcControllerMethodeTest {
     BranchData branchData;
     @MockBean
     CtcData ctcData;
-@MockBean
-RabbitMQSender rabbitMQSender;
+    @MockBean
+    RabbitMQSender rabbitMQSender;
 
     @BeforeEach
     public void setUp() {
@@ -52,7 +51,7 @@ RabbitMQSender rabbitMQSender;
 
         ctcCalculation = org.mockito.Mockito.mock(CtcCalculation.class);
         ctcData = org.mockito.Mockito.mock(CtcData.class);
-        rabbitMQSender=org.mockito.Mockito.mock(RabbitMQSender.class);
+        rabbitMQSender = org.mockito.Mockito.mock(RabbitMQSender.class);
 
 
     }
@@ -101,69 +100,63 @@ RabbitMQSender rabbitMQSender;
 
         CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctc, e_code, state, ename);
 
-
+        System.out.println(ctcData1);
         assertEquals(ctcData, ctcData1);
 
 
     }
 
 
-
-
-
     @Test
     void ctcCalculationDataSavingInDataBaseException() throws ECodeNotFoundException {
         MockitoAnnotations.initMocks(this);
-      try {
-          String e_code = "123";
-          String ename = "Ank";
-          String state = "JAIPUR";
-          long ctc = 0L;
+        try {
+            String e_code = "123";
+            String ename = "Ank";
+            String state = "JAIPUR";
+            long ctc = 0L;
 
 
-
-          System.out.println(BranchRepo);
-          System.out.println(ctcRepo);
-
-
-          when(BranchRepo.existsById("Bangalore")).thenReturn(true);
-          when(ctcRepo.existsById(e_code)).thenReturn(true);
-
-          System.out.println(BranchRepo.existsById(state) && ctcRepo.existsById(e_code));
-          when(BranchRepo.findById(state)).thenReturn(java.util.Optional.of(branchData));
-
-          when(branchData.getMINIMUM_WAGES()).thenReturn(0L);
-
-          when(branchData.getHRA_PER()).thenReturn(50L);
-          when(branchData.getSTATE_CODE()).thenReturn(state);
-          when(ctcCalculation.basie_calculation_methode(19990L, 12244L)).thenReturn(12244L);
-          when(ctcCalculation.bonusCalulation(12244L)).thenReturn(122444L);
-          when(ctcCalculation.employePfCalculation(12244L)).thenReturn(12244L);
-          when(ctcCalculation.gratutityCalculation(12244L)).thenReturn(122244L);
-          when(ctcCalculation.grossCalculation(ctc, 12244L, 122244L)).thenReturn(12244L);
-
-          when(ctcCalculation.employerEsiCalculation(1222)).thenReturn(12244L);
-          when(ctcCalculation.employeePf(12244L)).thenReturn(12244L);
-          when(ctcCalculation.employeeEsiCalculation(12444L)).thenReturn(12244L);
-          when(ctcCalculation.grossAndDeductionCalculation(12244L, 122244L)).thenReturn(12244L);
-          when(ctcCalculation.netPayCalucaltion(1222444L, 122244L, 12244L)).thenReturn(12244L);
-          when(ctcCalculation.netTakeHomeCalculation(122244L, 122244L)).thenReturn(12244L);
-          when(ctcCalculation.ptGrossCalculation(122244, 12244L)).thenReturn(122244L);
-          when(ctcCalculation.differneceCalculation(122244, 1222444L)).thenReturn(12244L);
-          when(ctcCalculation.home_Rent_Allowance(12244L, 122444L, 12244L, 12244L, 50L)).thenReturn(12244L);
-
-          CtcData ctcData = new CtcData("123", "Ank", 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, state, 0L, 0L);
-          System.out.println("AaDA");
-
-          CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctc, e_code, state, ename);
+            System.out.println(BranchRepo);
+            System.out.println(ctcRepo);
 
 
-          assertEquals(ctcData, ctcData1);
-      }
-      catch (InvalidStateCodeCException e)
-      {
-          e.printStackTrace();
-      }
+            when(BranchRepo.existsById("Bangalore")).thenReturn(true);
+            when(ctcRepo.existsById(e_code)).thenReturn(true);
+
+            System.out.println(BranchRepo.existsById(state) && ctcRepo.existsById(e_code));
+            when(BranchRepo.findById(state)).thenReturn(java.util.Optional.of(branchData));
+
+            when(branchData.getMINIMUM_WAGES()).thenReturn(0L);
+
+            when(branchData.getHRA_PER()).thenReturn(50L);
+            when(branchData.getSTATE_CODE()).thenReturn(state);
+            when(ctcCalculation.basie_calculation_methode(19990L, 12244L)).thenReturn(12244L);
+            when(ctcCalculation.bonusCalulation(12244L)).thenReturn(122444L);
+            when(ctcCalculation.employePfCalculation(12244L)).thenReturn(12244L);
+            when(ctcCalculation.gratutityCalculation(12244L)).thenReturn(122244L);
+            when(ctcCalculation.grossCalculation(ctc, 12244L, 122244L)).thenReturn(12244L);
+
+            when(ctcCalculation.employerEsiCalculation(1222)).thenReturn(12244L);
+            when(ctcCalculation.employeePf(12244L)).thenReturn(12244L);
+            when(ctcCalculation.employeeEsiCalculation(12444L)).thenReturn(12244L);
+            when(ctcCalculation.grossAndDeductionCalculation(12244L, 122244L)).thenReturn(12244L);
+            when(ctcCalculation.netPayCalucaltion(1222444L, 122244L, 12244L)).thenReturn(12244L);
+            when(ctcCalculation.netTakeHomeCalculation(122244L, 122244L)).thenReturn(12244L);
+            when(ctcCalculation.ptGrossCalculation(122244, 12244L)).thenReturn(122244L);
+            when(ctcCalculation.differneceCalculation(122244, 1222444L)).thenReturn(12244L);
+            when(ctcCalculation.home_Rent_Allowance(12244L, 122444L, 12244L, 12244L, 50L)).thenReturn(12244L);
+
+            CtcData ctcData = new CtcData("123", "Ank", 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, state, 0L, 0L);
+            System.out.println("AaDA");
+
+            CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctc, e_code, state, ename);
+
+
+            assertEquals(ctcData, ctcData1);
+        } catch (InvalidStateCodeCException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -177,7 +170,6 @@ RabbitMQSender rabbitMQSender;
             String ename = "Ank";
             String state = "JAIPUR";
             long ctc = 0L;
-
 
 
             System.out.println(BranchRepo);
@@ -217,9 +209,7 @@ RabbitMQSender rabbitMQSender;
 
 
             assertEquals(ctcData, ctcData1);
-        }
-        catch (ECodeNotFoundException e)
-        {
+        } catch (ECodeNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -227,13 +217,11 @@ RabbitMQSender rabbitMQSender;
     }
 
 
-
-
     @Test
     void newUserCrete() throws UserAllreadyExistException {
         MockitoAnnotations.initMocks(this);
 
-          when(ctcRepo.existsById("12325236353253")).thenReturn(true);
+        when(ctcRepo.existsById("12325236353253")).thenReturn(true);
 
         CtcData ctcData = new CtcData("Ankit", "123");
         when(ctcRepo.save(ctcData)).thenReturn(ctcData);
@@ -247,31 +235,23 @@ RabbitMQSender rabbitMQSender;
 
 
     @Test
-    void newUserCreteException() throws  UserAllreadyExistException {
+    void newUserCreteException() throws UserAllreadyExistException {
         MockitoAnnotations.initMocks(this);
         try {
-        when(ctcRepo.existsById("Ankit")).thenReturn(true);
+            when(ctcRepo.existsById("Ankit")).thenReturn(true);
 
-        CtcData ctcData = new CtcData("Ankit", "123");
-        when(ctcRepo.save(ctcData)).thenReturn(ctcData);
+            CtcData ctcData = new CtcData("Ankit", "123");
+            when(ctcRepo.save(ctcData)).thenReturn(ctcData);
 
-        CtcData ctcData1 = controllerMethode.newUserCrete("Ankit", "123");
+            CtcData ctcData1 = controllerMethode.newUserCrete("Ankit", "123");
 
-        assertEquals(ctcData, ctcData1);}
-      catch (UserAllreadyExistException e)
-      {
-          e.printStackTrace();
-      }
+            assertEquals(ctcData, ctcData1);
+        } catch (UserAllreadyExistException e) {
+            e.printStackTrace();
+        }
 
 
     }
-
-
-
-
-
-
-
 
 
     @Test
@@ -326,15 +306,11 @@ RabbitMQSender rabbitMQSender;
             CtcData ctcData1 = controllerMethode.getUserCtcData(e_code);
 
             assertEquals(ctcData, ctcData1);
-        }catch (ECodeNotFoundException e)
-        {
-          e.printStackTrace();
+        } catch (ECodeNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
-
-
-
 
 
     @Test
@@ -350,22 +326,19 @@ RabbitMQSender rabbitMQSender;
     }
 
 
-
-
     @Test
     void deleteOneUserCtcDataException() {
         try {
             MockitoAnnotations.initMocks(this);
             //CtcData
-                    ctcData = new CtcData("123", "Ank");
-          //  CtcData
-                    ctcData = ctcRepo.getOne("123");
+            ctcData = new CtcData("123", "Ank");
+            //  CtcData
+            ctcData = ctcRepo.getOne("123");
             ctcRepo.delete(ctcData);
             when(ctcRepo.existsById("12311")).thenReturn(true);
             String s = controllerMethode.deleteOneUserCtcData("123");
             assertEquals("Your Ctc Data Deleted", s);
-        }catch (ECodeNotFoundException e)
-        {
+        } catch (ECodeNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -376,39 +349,36 @@ RabbitMQSender rabbitMQSender;
         // MockitoAnnotations.initMocks(this);
         MockitoAnnotations.initMocks(this);
 
-        CtcData CTCData1 = new CtcData("123", "as");
-        CtcData CTCData = new CtcData("123", "Ank");
+        CtcData ctcData1 = new CtcData("123", "as");
+        CtcData ctcData2 = new CtcData("123", "Ank");
         when(ctcRepo.existsById("123")).thenReturn(true);
-        when(ctcRepo.findById("123")).thenReturn(java.util.Optional.of(CTCData));
-        when(ctcRepo.save(CTCData)).thenReturn(CTCData);
+        when(ctcRepo.findById("123")).thenReturn(java.util.Optional.of(ctcData2));
+        when(ctcRepo.save(ctcData2)).thenReturn(ctcData2);
 
-        CtcData ctcData = controllerMethode.updateUserCtcData("123", CTCData1);
+        CtcData ctcData = controllerMethode.updateUserCtcData("123", ctcData1);
 
-        assertEquals(CTCData, ctcData);
+        assertEquals(ctcData2, ctcData);
 
     }
 
 
-
-
-@Test
+    @Test
     void updateUserCtcDataException() {
-       try {
-           MockitoAnnotations.initMocks(this);
+        try {
+            MockitoAnnotations.initMocks(this);
 
-           CtcData CTCData1 = new CtcData("123", "as");
-           CtcData CTCData = new CtcData("123", "Ank");
-           when(ctcRepo.existsById("124223")).thenReturn(true);
-           when(ctcRepo.findById("123")).thenReturn(java.util.Optional.of(CTCData));
-           when(ctcRepo.save(CTCData)).thenReturn(CTCData);
+            CtcData CtcData1 = new CtcData("123", "as");
+            CtcData CtcData2 = new CtcData("123", "Ank");
+            when(ctcRepo.existsById("124223")).thenReturn(true);
+            when(ctcRepo.findById("123")).thenReturn(java.util.Optional.of(CtcData2));
+            when(ctcRepo.save(CtcData2)).thenReturn(CtcData2);
 
-           CtcData ctcData = controllerMethode.updateUserCtcData("123", CTCData1);
+            CtcData ctcData = controllerMethode.updateUserCtcData("123", CtcData1);
 
-           assertEquals(CTCData, ctcData);
-       }catch (ECodeNotFoundException e)
-       {
-           e.printStackTrace();
-       }
+            assertEquals(CtcData2, ctcData);
+        } catch (ECodeNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 

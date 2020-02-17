@@ -43,7 +43,6 @@ public class CtcControllerMethode implements CtcControllerImpl {
     }
 
 
-
     public CtcData newUserCrete(String ecode, String ename) throws UserAllreadyExistException {
 
         ctcData.setE_code(ecode);
@@ -54,28 +53,24 @@ public class CtcControllerMethode implements CtcControllerImpl {
         if (!ctcRepo.existsById(ecode)) {
             CtcData ctc_Data = new CtcData(ecode, ename);
             System.out.println(ctcRepo.save(ctc_Data));
+            rabbitMQSender.send(ctc_Data);
             return ctcRepo.save(ctc_Data);
 
         }
-            throw new UserAllreadyExistException("AllReady  User ECode Used");
+
+        throw new UserAllreadyExistException("AllReady  User ECode Used");
 
 
     }
 
 
-
-
-
-
-
-
     public CtcData ctcCalculationDataSavingInDataBase(Long ctc, String e_code, String state, String e_Name) throws InvalidStateCodeCException, ECodeNotFoundException {
 
-             rabbitMQSender.send(ctcData);
-             ctcData.setEname(e_Name);
-             ctcData.setE_code(e_code);
-             ctcData.setlOC(state);
-             ctcData.setCtc(ctc);
+
+        ctcData.setEname(e_Name);
+        ctcData.setE_code(e_code);
+        ctcData.setlOC(state);
+        ctcData.setCtc(ctc);
 
         System.out.println(BranchRepo.existsById(state) && ctcRepo.existsById(e_code));
         if (BranchRepo.existsById(state) && ctcRepo.existsById(e_code)) {
@@ -85,7 +80,7 @@ public class CtcControllerMethode implements CtcControllerImpl {
             System.out.println(get_minimum_Wage_to_database);
             System.out.println(state);
             Long get_Hra_Percentage_To_DataBase = get_data_to_breanch_repo.getHRA_PER();
-            CtcData CTCData = new CtcData();
+          CtcData   data = new CtcData();
             // Basic_Calculation_Methode_is_started_here_________________________________________________________________________________
             Long got_basic_calculation_by_basic = ctcCalculation.basie_calculation_methode(ctc, get_minimum_Wage_to_database);
 
@@ -140,51 +135,46 @@ public class CtcControllerMethode implements CtcControllerImpl {
 
 
             //Repository_Object_IS_Created_To_Set_In_Data_Base___________________________________________________________________________
-            CTCData.setCtc(ctc);
-            CTCData.setlOC(state);
-            CTCData.setBasic(got_basic_calculation_by_basic);
-            CTCData.setNet_Take__Home(got_Net_Take_Home_Calculation_by_net_take_home);
-            CTCData.setBonus(got_bonis_calculation_bonus);
-            CTCData.setEmployee_Esi(got_Employee_ESI_Calculation_by_employee_esi);
-            CTCData.setEmployee_Pf(got_Employee_PF_Calculation_by_employee_pf);
-            CTCData.setEmployer_Esi(got_Employee_ESI_Calculation_by_employee_esi);
-            CTCData.setGross_Ded(got_Gross_And_Deduction_Calculation_by_gross_and_deduction);
-            CTCData.setGross(got_Gross_Calculation_by_gross);
-            CTCData.setH_R_A(got_HOME_RENT_Allowance_Calculation_by_hra);
-            CTCData.setNet_pay(got_Net_Pay_Calculation_net_pay);
-            CTCData.setEmployer_Pf(got_Employer_PF_claculation_by_employer_pf);
-            CTCData.setDiff(got_DIFFERNECE_Calculation_by_differnence);
-            CTCData.setGratuity(got_gratutity_calculation_by_gratutity);
-            CTCData.setPt_Gross(got_PT_Gross_Calculation_by_pt_gross);
-            CTCData.setMinimum_Wage(get_minimum_Wage_to_database);
-            CTCData.setEname(e_Name);
-            CTCData.setE_code(e_code);
+            data.setCtc(ctc);
+            data.setlOC(state);
+            data.setBasic(got_basic_calculation_by_basic);
+            data.setNet_Take__Home(got_Net_Take_Home_Calculation_by_net_take_home);
+            data.setBonus(got_bonis_calculation_bonus);
+            data.setEmployee_Esi(got_Employee_ESI_Calculation_by_employee_esi);
+            data.setEmployee_Pf(got_Employee_PF_Calculation_by_employee_pf);
+            data.setEmployer_Esi(got_Employee_ESI_Calculation_by_employee_esi);
+            data.setGross_Ded(got_Gross_And_Deduction_Calculation_by_gross_and_deduction);
+            data.setGross(got_Gross_Calculation_by_gross);
+            data.setH_R_A(got_HOME_RENT_Allowance_Calculation_by_hra);
+            data.setNet_pay(got_Net_Pay_Calculation_net_pay);
+            data.setEmployer_Pf(got_Employer_PF_claculation_by_employer_pf);
+            data.setDiff(got_DIFFERNECE_Calculation_by_differnence);
+            data.setGratuity(got_gratutity_calculation_by_gratutity);
+            data.setPt_Gross(got_PT_Gross_Calculation_by_pt_gross);
+            data.setMinimum_Wage(get_minimum_Wage_to_database);
+            data.setEname(e_Name);
+            data.setE_code(e_code);
 
-            ctcRepo.save(CTCData);
-
-            return CTCData;
-        } else if(!ctcRepo.existsById(e_code))
-        {
-            throw  new ECodeNotFoundException("Invalid Ecode Exception");
-        }
-        else
-        {
+            ctcRepo.save(data);
+            rabbitMQSender.send(data);
+            return data;
+        } else if (!ctcRepo.existsById(e_code)) {
+            rabbitMQSender.sendDelete("Invalid Ecode Exception");
+            throw new ECodeNotFoundException("Invalid Ecode Exception");
+        } else {
+            rabbitMQSender.sendDelete("Please Enter Correct StateCode");
             throw new InvalidStateCodeCException("Please Enter Correct StateCode");
         }
-
 
 
     }
 
     public CtcData getUserCtcData(String e_code) throws ECodeNotFoundException {
-        ctcData=new CtcData();
-        ctcData.setE_code(e_code);
-        rabbitMQSender.send(ctcData);
-
         System.out.println(ctcRepo.existsById(e_code));
         if (ctcRepo.existsById(e_code)) {
             System.out.println(e_code);
             System.out.println(ctcRepo.getOne(e_code));
+            rabbitMQSender.send(ctcRepo.getOne(e_code));
             return ctcRepo.getOne(e_code);
         } else {
             throw new ECodeNotFoundException("Invalid ECode");
@@ -193,11 +183,10 @@ public class CtcControllerMethode implements CtcControllerImpl {
 
     public List<CtcData> getAllUsersCtcData() {
 
-
+        rabbitMQSender.sendList(ctcRepo.findAll());
         System.out.println(ctcRepo.findAll());
         return ctcRepo.findAll();
     }
-
 
 
     public CtcData updateUserCtcData(String e_code, CtcData ctc_data) throws ECodeNotFoundException {
@@ -211,15 +200,12 @@ public class CtcControllerMethode implements CtcControllerImpl {
                         System.out.println(ctcRepo.save(ctc_data1));
                         ctc_data1.setEname(ctc_data.getEname());
 
-
+                        rabbitMQSender.send(ctc_data1);
                         return ctcRepo.save(ctc_data1);
-                    })
-                    .orElseGet(() -> {
-                        ctc_data.setE_code(e_code);
-                        return ctcRepo.save(ctc_data);
-                    })
+                    }).orElse(null)
             );
         } else {
+            rabbitMQSender.sendDelete("Invalid ECode");
             throw new ECodeNotFoundException("Invalid ECode");
         }
 
@@ -227,17 +213,18 @@ public class CtcControllerMethode implements CtcControllerImpl {
     }
 
 
-
     public String deleteOneUserCtcData(String e_code) throws ECodeNotFoundException {
 
         if (ctcRepo.existsById(e_code)) {
 
-            CtcData ab = ctcRepo.getOne(e_code);
+            CtcData deleteCtcData = ctcRepo.getOne(e_code);
 
-            ctcRepo.delete(ab);
-
+            ctcRepo.delete(deleteCtcData);
+            rabbitMQSender.send(deleteCtcData);
+            rabbitMQSender.sendDelete("Your Ctc Data Deleted");
             return "Your Ctc Data Deleted";
         } else {
+            rabbitMQSender.sendDelete("Invalid ECode");
             throw new ECodeNotFoundException("Invalid ECode");
         }
 
@@ -246,6 +233,7 @@ public class CtcControllerMethode implements CtcControllerImpl {
 
     public String deleteAllUserCtcData() {
         ctcRepo.deleteAll();
+        rabbitMQSender.sendDelete("All CtcData Deleted");
         return " All Data  Deleted";
     }
 
