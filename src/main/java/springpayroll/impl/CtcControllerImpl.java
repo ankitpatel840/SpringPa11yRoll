@@ -1,22 +1,19 @@
 package springpayroll.impl;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Service;
 import springpayroll.exception.ECodeNotFoundException;
-import springpayroll.exception.UserAllreadyExistException;
 import springpayroll.exception.InvalidStateCodeCException;
+import springpayroll.exception.UserAllreadyExistException;
 import springpayroll.model.CtcData;
 
 import java.util.List;
 
-@Service
-@Configuration
+
 public interface CtcControllerImpl {
 
 
-    CtcData ctcCalculationDataSavingInDataBase(Long ctc, String e_code, String state, String e_Name) throws InvalidStateCodeCException, ECodeNotFoundException;
+    CtcData ctcCalculationDataSavingInDataBase(CtcData ctcData) throws InvalidStateCodeCException, ECodeNotFoundException;
 
-    CtcData newUserCrete(String ecode, String ename) throws UserAllreadyExistException, ECodeNotFoundException;
+    CtcData newUserCrete(CtcData ctc) throws UserAllreadyExistException, ECodeNotFoundException;
 
     List<CtcData> getAllUsersCtcData();
 

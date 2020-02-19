@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Entity
@@ -19,52 +22,20 @@ import javax.persistence.Id;
 @Data
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
+@Table(name = "ctc")
 public class CtcData {
 
 
-    @Id()
+    @Id
     private String e_code;
-    @Column
 
     private String ename;
 
-    @Column
-    private Long h_R_A;
-    @Column
-    private Long net_Take__Home;
-    @Column
-    private Long ctc;
-    @Column
-    private Long basic;
-    @Column
-    private Long bonus;
-    @Column
-    private Long employer_Esi;
-    @Column
-    private Long gratuity;
-    @Column
-    private Long gross;
-    @Column
-    private Long employee_Pf;
-    @Column
-    private Long employee_Esi;
-    @Column
-    private Long employer_Pf;
-    @Column
-    private Long gross_Ded;
-    @Column
-    private Long diff;
-    @Column
-    private Long pt_Gross;
-    @Column
     private String lOC;
-    @Column
-    private Long net_pay;
 
-    @Column
-    private Long minimum_Wage;
-
+    private Long ctc;
+    @ElementCollection
+    Map<String, CtcComponent> map = new HashMap<>();
 
     public CtcData(String e_code) {
 
@@ -75,8 +46,6 @@ public class CtcData {
         this.ename = ename;
     }
 
-    public void setlOC(String lOC) {
-        this.lOC = lOC;
-    }
+
 }
 

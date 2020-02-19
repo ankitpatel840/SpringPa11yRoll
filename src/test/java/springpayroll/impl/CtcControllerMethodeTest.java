@@ -10,6 +10,7 @@ import springpayroll.exception.ECodeNotFoundException;
 import springpayroll.exception.InvalidStateCodeCException;
 import springpayroll.exception.UserAllreadyExistException;
 import springpayroll.model.BranchData;
+import springpayroll.model.CtcComponent;
 import springpayroll.model.CtcData;
 import springpayroll.repo.BranchRepo;
 import springpayroll.repo.CtcRepo;
@@ -42,6 +43,9 @@ class CtcControllerMethodeTest {
     CtcData ctcData;
     @MockBean
     RabbitMQSender rabbitMQSender;
+    @MockBean
+    CtcComponent ctcComponent;
+
 
     @BeforeEach
     public void setUp() {
@@ -94,11 +98,11 @@ class CtcControllerMethodeTest {
         when(ctcCalculation.ptGrossCalculation(122244, 12244L)).thenReturn(122244L);
         when(ctcCalculation.differneceCalculation(122244, 1222444L)).thenReturn(12244L);
         when(ctcCalculation.home_Rent_Allowance(12244L, 122444L, 12244L, 12244L, 50L)).thenReturn(12244L);
-
-        CtcData ctcData = new CtcData("123", "Ank", 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, state, 0L, 0L);
+       //     public CtcComponent(Long h_R_A, Long net_Take__Home, Long basic, Long bonus, Long employer_Esi, Long gratuity, Long gross, Long employee_Pf, Long employee_Esi, Long employer_Pf, Long gross_Ded, Long diff, Long pt_Gross, Long net_pay, Long minimum_Wage)
+         ctcComponent = new CtcComponent(50L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L);
         System.out.println("AaDA");
 
-        CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctc, e_code, state, ename);
+        CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctcData);
 
         System.out.println(ctcData1);
         assertEquals(ctcData, ctcData1);
@@ -115,7 +119,10 @@ class CtcControllerMethodeTest {
             String ename = "Ank";
             String state = "JAIPUR";
             long ctc = 0L;
-
+             ctcData.setLOC(state);
+             ctcData.setEname(ename);
+             ctcData.setEname(ename);
+             ctcData.setCtc(0L);
 
             System.out.println(BranchRepo);
             System.out.println(ctcRepo);
@@ -147,10 +154,11 @@ class CtcControllerMethodeTest {
             when(ctcCalculation.differneceCalculation(122244, 1222444L)).thenReturn(12244L);
             when(ctcCalculation.home_Rent_Allowance(12244L, 122444L, 12244L, 12244L, 50L)).thenReturn(12244L);
 
-            CtcData ctcData = new CtcData("123", "Ank", 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, state, 0L, 0L);
+            ctcComponent = new CtcComponent(50L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L);
+                when(ctcData.getMap().put("123",ctcComponent)).thenReturn(ctcComponent);
             System.out.println("AaDA");
 
-            CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctc, e_code, state, ename);
+            CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctcData);
 
 
             assertEquals(ctcData, ctcData1);
@@ -202,10 +210,10 @@ class CtcControllerMethodeTest {
             when(ctcCalculation.differneceCalculation(122244, 1222444L)).thenReturn(12244L);
             when(ctcCalculation.home_Rent_Allowance(12244L, 122444L, 12244L, 12244L, 50L)).thenReturn(12244L);
 
-            CtcData ctcData = new CtcData("123", "Ank", 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, state, 0L, 0L);
+            ctcComponent = new CtcComponent(50L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L);
             System.out.println("AaDA");
 
-            CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctc, e_code, state, ename);
+            CtcData ctcData1 = controllerMethode.ctcCalculationDataSavingInDataBase(ctcData);
 
 
             assertEquals(ctcData, ctcData1);
@@ -226,7 +234,7 @@ class CtcControllerMethodeTest {
         CtcData ctcData = new CtcData("Ankit", "123");
         when(ctcRepo.save(ctcData)).thenReturn(ctcData);
 
-        CtcData ctcData1 = controllerMethode.newUserCrete("Ankit", "123");
+        CtcData ctcData1 = controllerMethode.newUserCrete(ctcData);
 
         assertEquals(ctcData, ctcData1);
 
@@ -243,7 +251,7 @@ class CtcControllerMethodeTest {
             CtcData ctcData = new CtcData("Ankit", "123");
             when(ctcRepo.save(ctcData)).thenReturn(ctcData);
 
-            CtcData ctcData1 = controllerMethode.newUserCrete("Ankit", "123");
+            CtcData ctcData1 = controllerMethode.newUserCrete(ctcData);
 
             assertEquals(ctcData, ctcData1);
         } catch (UserAllreadyExistException e) {

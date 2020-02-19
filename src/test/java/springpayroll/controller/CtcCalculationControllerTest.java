@@ -53,28 +53,35 @@ class CtcCalculationControllerTest {
     @Test
     void all_the_calcution_find_New() throws Exception, InvalidStateCodeCException, ECodeNotFoundException {
         MockitoAnnotations.initMocks(this);
+     CtcData ctcData=new CtcData();
+     ctcData.setCtc(12L);
+     ctcData.setE_code("A12");
+     ctcData.setEname("A");
 
 
-        CtcData CTCData = new CtcData("as12", "AQW");
-        when(ctcControllerImpl.ctcCalculationDataSavingInDataBase(19967L, "as12", "BANGALORE", "AQW")).thenReturn(CTCData);
-
-
-
-        MockHttpServletResponse response = mockMvc.perform(post("/ctc/as12/AQW/19967/BANGALORE")).andReturn().getResponse();
-
-        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
-    }
-
-    @Test
-    void login_methode_Post() throws Exception {
-//
         MockitoAnnotations.initMocks(this);
         CtcData CTCData = new CtcData("123", "Gunjan");
 
         String json = objectMapper.writeValueAsString(CTCData);
 
 
-        MockHttpServletResponse response = mockMvc.perform(post("/ctc/123/Gunjan").content(json).contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        MockHttpServletResponse response = mockMvc.perform(post("/ctcCalculation").content(json).contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        assertThat(response.getStatus(), is(HttpStatus.OK.value()));
+
+
+    }
+
+    @Test
+    void login_methode_Post() throws Exception {
+
+        MockitoAnnotations.initMocks(this);
+        CtcData CTCData = new CtcData("123", "Gunjan");
+
+        String json = objectMapper.writeValueAsString(CTCData);
+
+
+        MockHttpServletResponse response = mockMvc.perform(post("/ctc-ecode-ename").content(json).contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         assertThat(response.getStatus(), is(HttpStatus.CREATED.value()));
 

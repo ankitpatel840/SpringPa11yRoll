@@ -34,6 +34,10 @@ class CtcCalculationIntegrationTesting {
     HttpHeaders headers = new HttpHeaders();
 
 
+    public String url(){
+       return  "http://localhost:" + this.port;
+    }
+
     @Test
     void newUserCtcDataSaving() throws Exception {
 
@@ -42,9 +46,7 @@ class CtcCalculationIntegrationTesting {
         employee.setEname("Kapoor");
 
         ResponseEntity<String> responseEntity = this.restTemplate
-                .postForEntity("http://localhost:" + this.port + "/ctc/" + employee.getE_code()
-                                + "/" + employee.getEname()
-                        , employee, String.class);
+                .postForEntity(url() + "/ctc-ecode-ename", employee, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
 
     }
@@ -57,10 +59,10 @@ class CtcCalculationIntegrationTesting {
         employee.setE_code("Ank13445");
         employee.setEname("Kapoor");
         employee.setCtc(4442345345686544L);
-        employee.setlOC(a);
+
+        employee.setLOC(a);
         ResponseEntity<String> responseEntity = this.restTemplate
-                .postForEntity("http://localhost:" + this.port + "/ctc/" + employee.getE_code()
-                                + "/" + employee.getEname() + "/" + employee.getCtc() + "/" + employee.getLOC()
+                .postForEntity(url() + "/ctcCalculation"
                         , employee, String.class);
 
         assertEquals(200, responseEntity.getStatusCodeValue());
@@ -68,26 +70,13 @@ class CtcCalculationIntegrationTesting {
 
     @Test
     void getUserCtcData() {
-        String expected =
-                "{\"e_code\":\"Ank13445\",\"ename\":\"Kapoor\",\"h_R_A\":727123086181676,\"net_Take__Home\":3762887642362031," +
-                        "\"ctc\":4442345345686544,\"basic\":1454246172363353,\"bonus\":121138706157867,\"employer_Esi\":70131756441016,\"gratuity\":69949240890677," +
-                        "\"gross\":4007528939486649,\"employee_Pf\":174509540683602,\"employee_Esi\":70131756441016,\"employer_Pf\":174509540683602," +
-                        "\"gross_Ded\":244641297124618,\"diff\":0,\"pt_Gross\":4007528939486649,\"net_pay\":3762887642362031," +
-                        "\"minimum_Wage\":6500,\"loc\":\"JAIPUR\"}";
+
 
         String employeeCode = "Ank13445";
         ResponseEntity<String> responseEntity = this.restTemplate
                 .getForEntity("http://localhost:" + this.port + "/ctc/" + employeeCode, String.class);
 
         assertEquals(200, responseEntity.getStatusCodeValue());
-        System.out.println(expected);
-        System.out.println(responseEntity.getBody());
-        if (expected.equals(responseEntity.getBody())) {
-            System.out.println("Your Test Passed");
-        } else {
-            System.out.println("not");
-        }
-        assertEquals(expected, responseEntity.getBody());
 
 
     }
@@ -149,12 +138,5 @@ class CtcCalculationIntegrationTesting {
 
     }
 
-//    @Test
-//    void deleteAllUserCtcData() {
-//        CtcData employee = new CtcData();
-//
-//
-//        this.restTemplate.delete("http://localhost:" + this.port + "/ctc", employee);
-//
-//    }
+
 }

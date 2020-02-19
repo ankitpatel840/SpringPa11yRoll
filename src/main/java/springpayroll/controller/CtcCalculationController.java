@@ -18,19 +18,20 @@ public class CtcCalculationController {
     CtcControllerImpl ctcControllerImpl;
 
 
-    @PostMapping("ctc/{ecode}/{ename}")
-    public ResponseEntity<CtcData> newUserCtcDataSaving(@PathVariable String ecode, @PathVariable String ename) throws UserAllreadyExistException, ECodeNotFoundException {
+    @RequestMapping(value = "/ctc-ecode-ename",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
 
 
-        return new ResponseEntity<>(ctcControllerImpl.newUserCrete(ecode,ename), HttpStatus.CREATED);
+    public ResponseEntity<CtcData> newUserCtcDataSaving(@RequestBody CtcData ctcData) throws UserAllreadyExistException, ECodeNotFoundException {
+
+        return new ResponseEntity<>(ctcControllerImpl.newUserCrete(ctcData), HttpStatus.CREATED);
     }
 
 
 
-    @PostMapping("ctc/{e_code}/{e_Name}/{ctc}/{state}")
-    public ResponseEntity<Object> all_the_calcution_find_New(@PathVariable long ctc, @PathVariable String e_code, @PathVariable String state, @PathVariable String e_Name) throws InvalidStateCodeCException, ECodeNotFoundException {
+    @PostMapping("/ctcCalculation")
+    public ResponseEntity<Object> all_the_calcution_find_New(@RequestBody CtcData ctcData) throws InvalidStateCodeCException, ECodeNotFoundException {
 
-        return new ResponseEntity<>(ctcControllerImpl.ctcCalculationDataSavingInDataBase(ctc, e_code, state, e_Name), HttpStatus.OK);
+        return new ResponseEntity<>(ctcControllerImpl.ctcCalculationDataSavingInDataBase(ctcData), HttpStatus.OK);
 
     }
 
@@ -38,7 +39,7 @@ public class CtcCalculationController {
     @GetMapping("ctc/{e_code}")
     public ResponseEntity<Object> getUserCtcData(@PathVariable String e_code) throws ECodeNotFoundException {
 
-
+        System.out.println("segseg");
         return new ResponseEntity<>(ctcControllerImpl.getUserCtcData(e_code), HttpStatus.OK);
 
     }
